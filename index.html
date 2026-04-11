@@ -87,36 +87,43 @@
     .nav-btn:hover { background: var(--lime-dark) !important; transform: translateY(-1px); }
 
     /* ─── HERO ────────────────────────────────────── */
+
+    /* Wrapper: text height + sticky car height + resistance */
     .hero-scroll-wrapper {
-      /* 45vh spacer + 100vh hero + 1300px resistance */
-      height: calc(145vh + 1300px);
+      height: calc(32vh + 100vh + 1200px);
     }
 
-    .hero-spacer {
-      height: 45vh;
+    /* Text section — scrolls normally, no sticky */
+    .hero-pre {
+      padding-top: 72px;
+      height: 32vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
       background: var(--ink);
+      padding-left: 12%;
+      padding-right: 12%;
     }
 
+    /* Sticky car section */
     .hero {
       position: sticky;
-      /* negative top: hero slides up 15vh before sticking,
-         so car (at ~65% of hero height) lands at 50vh = centered */
-      top: -15vh;
+      top: 0;
       height: 100vh;
-      padding-top: 72px;
       background: var(--ink);
       display: flex;
-      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      padding-bottom: 15vh;
     }
 
     .hero-visual {
       width: 100%;
       display: flex;
       justify-content: center;
-      align-items: flex-end;
-      padding: 0 2rem 0;
-      margin-top: -3rem;
+      align-items: center;
+      padding: 0 2rem;
       overflow: hidden;
     }
 
@@ -139,10 +146,9 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2.5rem;
-      padding: 3rem 3.5rem 5.5rem;
-      max-width: 1280px;
-      margin: 0 auto;
       width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
       will-change: opacity, transform;
     }
 
@@ -210,6 +216,289 @@
       max-width: 42ch;
     }
 
+    /* ─── MODEL PANEL ───────────────────────────── */
+    .model-panel {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) translateX(3rem);
+      width: 220px;
+      background: #0D0F18;
+      border: 1px solid rgba(198,232,58,0.2);
+      border-radius: 14px;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 50;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .model-panel.collapsed {
+      transform: translateY(-50%) translateX(-100%);
+    }
+    .model-panel-tab {
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 48px;
+      background: #0D0F18;
+      border: 1px solid rgba(198,232,58,0.2);
+      border-left: none;
+      border-radius: 0 10px 10px 0;
+      color: var(--lime);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s;
+      padding: 0;
+    }
+    .model-panel-tab:hover { background: rgba(198,232,58,0.08); }
+    .tab-arrow { display: inline-block; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .model-panel.collapsed .tab-arrow { transform: rotate(180deg); }
+    .car-model-label {
+      position: absolute;
+      top: calc(50% - 290px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--ff-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      white-space: nowrap;
+      pointer-events: none;
+      text-align: center;
+    }
+    .car-model-label.visible { opacity: 1; }
+    .model-panel-label {
+      font-family: var(--ff-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .model-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.18s;
+      width: 100%;
+    }
+    .model-input::placeholder { color: var(--muted); }
+    .model-input:focus { border-color: rgba(198,232,58,0.5); }
+    .model-input-wrap { position: relative; }
+    .model-suggestions {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #0D0F18;
+      border: 1px solid rgba(198,232,58,0.2);
+      border-radius: 8px;
+      list-style: none;
+      margin: 0; padding: 0.3rem 0;
+      z-index: 100;
+      max-height: 180px;
+      overflow-y: auto;
+      display: none;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    }
+    .model-suggestions.open { display: block; }
+    .model-suggestions li {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.82rem;
+      color: var(--white);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .model-suggestions li:hover,
+    .model-suggestions li.active { background: rgba(198,232,58,0.12); color: var(--lime); }
+    .model-save-btn {
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .model-save-btn:hover { background: var(--lime-dark); }
+
+    /* ─── HERO CTA BUTTON ───────────────────────── */
+    .hero-cta {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      padding: 0.75rem 2.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+      transition: background 0.18s, transform 0.18s;
+      white-space: nowrap;
+    }
+    .hero-cta:hover  { background: var(--lime-dark); transform: translateX(-50%) translateY(-2px); }
+    .hero-cta:active { transform: translateX(-50%) translateY(0); }
+    .hero-cta-icon {
+      display: inline-block;
+      width: 1.1em;
+      height: 1.1em;
+      vertical-align: middle;
+      margin-left: 0.45em;
+      margin-bottom: 0.1em;
+      filter: brightness(0);
+    }
+
+    /* ─── SCAN MODAL ────────────────────────────── */
+    .scan-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .scan-modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .scan-modal {
+      background: #0D0F18;
+      border: 1px solid rgba(198,232,58,0.2);
+      border-radius: 18px;
+      padding: 1.75rem;
+      width: min(480px, 92vw);
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      transform: translateY(16px);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .scan-modal-overlay.open .scan-modal { transform: translateY(0); }
+    .scan-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .scan-modal-title {
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+    .scan-modal-close {
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.07);
+      border: none; border-radius: 50%;
+      color: var(--muted); cursor: pointer;
+      font-size: 0.7rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .scan-modal-close:hover { background: rgba(255,255,255,0.13); }
+    .drop-zone {
+      border: 2px dashed rgba(198,232,58,0.3);
+      border-radius: 12px;
+      min-height: clamp(140px, 30vh, 220px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      position: relative;
+      overflow: hidden;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: rgba(198,232,58,0.7);
+      background: rgba(198,232,58,0.04);
+    }
+    .drop-zone-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 2rem;
+    }
+    .drop-zone-text {
+      font-family: var(--ff-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-top: 0.5rem;
+    }
+    .drop-zone-sub { font-size: 0.82rem; }
+    .drop-zone-hint {
+      font-size: 0.72rem;
+      margin-top: 0.25rem;
+      opacity: 0.5;
+    }
+    .drop-preview {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute; inset: 0;
+    }
+    .scan-modal-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .scan-clear-btn {
+      flex: 0 0 auto;
+      background: rgba(255,255,255,0.07);
+      border: none; border-radius: 8px;
+      color: var(--muted); font-family: var(--ff-body);
+      font-size: 0.875rem; font-weight: 500;
+      padding: 0.65rem 1rem; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .scan-clear-btn:hover { background: rgba(255,255,255,0.12); }
+    .scan-submit-btn {
+      flex: 1;
+      background: var(--lime); color: var(--ink);
+      border: none; border-radius: 8px;
+      font-family: var(--ff-display); font-weight: 700;
+      font-size: 0.9rem; cursor: pointer;
+      padding: 0.65rem 1rem;
+      transition: background 0.18s;
+    }
+    .scan-submit-btn:hover { background: var(--lime-dark); }
+
     /* ─── CAR INTERACTIVE ────────────────────────── */
     .car-art { position: relative; }
 
@@ -236,8 +525,9 @@
     /* Popup */
     .part-popup {
       position: absolute;
-      bottom: 1.25rem;
-      right: 1.5rem;
+      right: 3rem;
+      top: 50%;
+      transform: translateY(-50%);
       width: 272px;
       background: #0D0F18;
       border: 1px solid rgba(198,232,58,0.28);
@@ -256,8 +546,8 @@
     }
 
     @keyframes popIn {
-      from { opacity: 0; transform: scale(0.9) translateY(10px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
+      from { opacity: 0; transform: translateY(calc(-50% + 10px)) scale(0.95); }
+      to   { opacity: 1; transform: translateY(-50%) scale(1); }
     }
 
     .popup-header {
@@ -886,17 +1176,46 @@
   <a href="#" class="nav-logo">Repair<em>Sync</em></a>
   <ul class="nav-links">
     <li><a href="#">Product</a></li>
-    <li><a href="#">How It Works</a></li>
-    <li><a href="#">For Insurers</a></li>
-    <li><a href="#">Contact</a></li>
-    <li><a href="#" class="nav-btn">Get Early Access</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
 
 <!-- ─── HERO ──────────────────────────────────────────── -->
 <div class="hero-scroll-wrapper">
-<div class="hero-spacer"></div>
+
+<div class="hero-pre">
+  <div class="hero-text">
+    <div class="hero-brand-block">
+      <span class="hero-eyebrow">AI Repair Intelligence</span>
+      <h1 class="hero-wordmark">Repair<br>Sync</h1>
+    </div>
+    <div class="hero-desc-block">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Now in private beta
+      </div>
+      <p class="hero-copy">
+        The neutral AI referee between insurers, repair shops, and drivers — delivering instant, unbiased repair quotes from photos in under 60 seconds.
+      </p>
+    </div>
+  </div>
+</div>
+
 <section class="hero">
+
+  <div class="model-panel" id="model-panel">
+    <span class="model-panel-label">Vehicle Model</span>
+    <div class="model-input-wrap">
+      <input id="model-input" class="model-input" type="text" placeholder="e.g. Toyota Camry" autocomplete="off" />
+      <ul id="model-suggestions" class="model-suggestions"></ul>
+    </div>
+    <button id="model-save-btn" class="model-save-btn" onclick="saveModel()">Save</button>
+    <button class="model-panel-tab" onclick="toggleModelPanel()" aria-label="Toggle panel"><span class="tab-arrow">&#8249;</span></button>
+  </div>
+
+  <div id="car-model-label" class="car-model-label"></div>
+
   <div class="hero-visual">
     <div class="car-art">
       <svg id="car-svg" viewBox="0 0 680 380" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1045,50 +1364,40 @@
         <!-- Rear wheel -->
         <circle class="car-part" data-part="rear-wheel" cx="496" cy="278" r="46"/>
       </svg>
-      <!-- Part info popup -->
-      <div id="part-popup" class="part-popup">
-        <div class="popup-header">
-          <span id="popup-part-name" class="popup-part-name">—</span>
-          <button class="popup-close" onclick="closePopup()" aria-label="Close">✕</button>
-        </div>
-        <p id="popup-desc" class="popup-desc"></p>
-        <div>
-          <span class="popup-label">Damage Severity</span>
-          <div class="severity-options">
-            <button class="sev-btn" data-sev="minor"    onclick="selectSeverity('minor')">Minor</button>
-            <button class="sev-btn" data-sev="moderate" onclick="selectSeverity('moderate')">Moderate</button>
-            <button class="sev-btn" data-sev="severe"   onclick="selectSeverity('severe')">Severe</button>
-          </div>
-        </div>
-        <textarea id="popup-notes" class="popup-notes" placeholder="Add damage notes…"></textarea>
-        <button class="popup-save" onclick="saveNote()">Save Note</button>
-        <div id="popup-saved" class="popup-saved-indicator">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6l3 3 5-5" stroke="#C6E83A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Note saved
-        </div>
-      </div>
     </div>
   </div>
 
-  <div class="hero-text">
-    <div class="hero-brand-block">
-      <span class="hero-eyebrow">AI Repair Intelligence</span>
-      <h1 class="hero-wordmark">Repair<br>Sync</h1>
+  <div id="part-popup" class="part-popup">
+    <div class="popup-header">
+      <span id="popup-part-name" class="popup-part-name">—</span>
+      <button class="popup-close" onclick="closePopup()" aria-label="Close">✕</button>
     </div>
-    <div class="hero-desc-block">
-      <div class="hero-tag">
-        <span class="hero-tag-dot"></span>
-        Now in private beta
+    <p id="popup-desc" class="popup-desc"></p>
+    <div>
+      <span class="popup-label">Damage Severity</span>
+      <div class="severity-options">
+        <button class="sev-btn" data-sev="minor"    onclick="selectSeverity('minor')">Minor</button>
+        <button class="sev-btn" data-sev="moderate" onclick="selectSeverity('moderate')">Moderate</button>
+        <button class="sev-btn" data-sev="severe"   onclick="selectSeverity('severe')">Severe</button>
       </div>
-      <p class="hero-copy">
-        The neutral AI referee between insurers, repair shops, and drivers — delivering instant, unbiased repair quotes from photos in under 60 seconds.
-      </p>
+    </div>
+    <textarea id="popup-notes" class="popup-notes" placeholder="Add damage notes…"></textarea>
+    <button class="popup-save" onclick="saveNote()">Save Note</button>
+    <div id="popup-saved" class="popup-saved-indicator">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path d="M2 6l3 3 5-5" stroke="#C6E83A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Note saved
     </div>
   </div>
+
+  <button class="hero-cta" onclick="openScanModal()">
+    Scan Damages <img src="scan-59.png" alt="" class="hero-cta-icon" />
+  </button>
+
 </section>
-</div>
+
+</div><!-- end .hero-scroll-wrapper -->
 
 <!-- ─── STATS STRIP ──────────────────────────────────── -->
 <div class="stats-strip">
@@ -1188,7 +1497,7 @@
     <h2 class="showcase-h">Photo in.<br>Estimate out.</h2>
     <p class="showcase-p">Snap a photo of the damage, let our AI identify every affected panel, cross-reference OEM parts pricing, and deliver a plain-English cost range — trusted by drivers, shops, and insurers alike.</p>
     <a href="#" class="showcase-link">
-      See a live demo
+      Scan Damages
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
@@ -1196,78 +1505,7 @@
   </div>
 </section>
 
-<!-- ─── ROADMAP ───────────────────────────────────────── -->
-<section class="roadmap">
-  <h2 class="roadmap-h">Roadmap</h2>
-  <div class="roadmap-list">
-    <div class="roadmap-row">
-      <div class="roadmap-num">01</div>
-      <div class="roadmap-body">
-        <div class="roadmap-title">Upload or Describe Damage</div>
-        <p class="roadmap-desc">Drivers upload damage photos, record audio, or type a description. All three paths feed into the same AI analysis pipeline — no special equipment needed.</p>
-      </div>
-    </div>
-    <div class="roadmap-row">
-      <div class="roadmap-num">02</div>
-      <div class="roadmap-body">
-        <div class="roadmap-title">AI Vision Analysis</div>
-        <p class="roadmap-desc">Claude Vision identifies damaged parts, severity levels, and repair types — returning structured data in milliseconds. Dents, scratches, cracks, and replacements all detected.</p>
-      </div>
-    </div>
-    <div class="roadmap-row">
-      <div class="roadmap-num">03</div>
-      <div class="roadmap-body">
-        <div class="roadmap-title">Parts &amp; Labor Lookup</div>
-        <p class="roadmap-desc">Our system queries OEM parts databases and regional labor rate tables, cross-referencing historical invoice data to compute accurate cost ranges by ZIP code.</p>
-      </div>
-    </div>
-    <div class="roadmap-row">
-      <div class="roadmap-num">04</div>
-      <div class="roadmap-body">
-        <div class="roadmap-title">Verified Cost Range</div>
-        <p class="roadmap-desc">A min-max cost range is calculated per damaged component, with a plain-English summary — "Front bumper, left fender, paint blend needed → $1,580–$1,760."</p>
-      </div>
-    </div>
-    <div class="roadmap-row">
-      <div class="roadmap-num">05</div>
-      <div class="roadmap-body">
-        <div class="roadmap-title">PDF Report &amp; Settlement</div>
-        <p class="roadmap-desc">Download a branded PDF report with full itemized breakdown — use it to negotiate, settle, or dispute the claim with confidence and verifiable data.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ─── TEAM ──────────────────────────────────────────── -->
-<section class="team">
-  <h2 class="team-h">Meet the Team</h2>
-  <div class="team-grid">
-    <div class="team-card">
-      <div class="team-photo-wrap">
-        <span class="team-initials">AK</span>
-        <div class="team-lime-bar"></div>
-      </div>
-      <div class="team-name">Alex Kim</div>
-      <div class="team-role">Founder &amp; CEO</div>
-    </div>
-    <div class="team-card">
-      <div class="team-photo-wrap">
-        <span class="team-initials">JL</span>
-        <div class="team-lime-bar"></div>
-      </div>
-      <div class="team-name">Jordan Lee</div>
-      <div class="team-role">Lead Engineer</div>
-    </div>
-    <div class="team-card">
-      <div class="team-photo-wrap">
-        <span class="team-initials">MC</span>
-        <div class="team-lime-bar"></div>
-      </div>
-      <div class="team-name">Morgan Chen</div>
-      <div class="team-role">AI Research Lead</div>
-    </div>
-  </div>
-</section>
 
 <!-- ─── CTA / FOOTER ─────────────────────────────────── -->
 <footer class="cta">
@@ -1348,9 +1586,10 @@
   }
 
   function selectSeverity(sev) {
-    document.querySelectorAll('.sev-btn').forEach(b =>
-      b.classList.toggle('active', b.dataset.sev === sev)
-    );
+    const btn = document.querySelector(`.sev-btn[data-sev="${sev}"]`);
+    const isActive = btn.classList.contains('active');
+    document.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('active'));
+    if (!isActive) btn.classList.add('active');
   }
 
   function saveNote() {
@@ -1358,10 +1597,16 @@
     const notes    = document.getElementById('popup-notes').value.trim();
     const severity = document.querySelector('.sev-btn.active')?.dataset.sev || null;
 
-    savedNotes[activePart] = { notes, severity };
-
-    // Show indicator dot on the SVG
     const dot = document.getElementById('dot-' + activePart);
+
+    // If nothing selected, clear the dot and return
+    if (!notes && !severity) {
+      delete savedNotes[activePart];
+      if (dot) dot.classList.remove('show');
+      return;
+    }
+
+    savedNotes[activePart] = { notes, severity };
     if (dot) dot.classList.add('show');
 
     // Feedback on button + indicator
@@ -1391,22 +1636,211 @@
     }
   });
 
-  /* ── Hero text fade-out on scroll ─────────────────────── */
-  const heroText = document.querySelector('.hero-text');
+  /* ── Vehicle model autocomplete ───────────────────────── */
+  const CAR_MODELS = [
+    'Toyota Camry','Toyota Corolla','Toyota RAV4','Toyota Highlander','Toyota Tacoma','Toyota Tundra','Toyota Prius','Toyota Sienna',
+    'Honda Civic','Honda Accord','Honda CR-V','Honda Pilot','Honda Odyssey','Honda HR-V','Honda Ridgeline',
+    'Ford F-150','Ford Mustang','Ford Explorer','Ford Escape','Ford Edge','Ford Bronco','Ford Maverick',
+    'Chevrolet Silverado','Chevrolet Equinox','Chevrolet Malibu','Chevrolet Traverse','Chevrolet Colorado','Chevrolet Tahoe','Chevrolet Suburban',
+    'Dodge Ram 1500','Dodge Charger','Dodge Challenger','Dodge Durango','Dodge Journey',
+    'Jeep Wrangler','Jeep Grand Cherokee','Jeep Cherokee','Jeep Compass','Jeep Renegade',
+    'Nissan Altima','Nissan Sentra','Nissan Rogue','Nissan Pathfinder','Nissan Frontier','Nissan Titan','Nissan Murano',
+    'Hyundai Elantra','Hyundai Sonata','Hyundai Tucson','Hyundai Santa Fe','Hyundai Palisade',
+    'Kia Optima','Kia Sorento','Kia Sportage','Kia Telluride','Kia Soul','Kia Stinger',
+    'BMW 3 Series','BMW 5 Series','BMW X3','BMW X5','BMW M3','BMW M5',
+    'Mercedes-Benz C-Class','Mercedes-Benz E-Class','Mercedes-Benz GLE','Mercedes-Benz GLC','Mercedes-Benz A-Class',
+    'Audi A4','Audi A6','Audi Q5','Audi Q7','Audi Q3','Audi TT',
+    'Tesla Model 3','Tesla Model S','Tesla Model X','Tesla Model Y','Tesla Cybertruck',
+    'Subaru Outback','Subaru Forester','Subaru Impreza','Subaru Crosstrek','Subaru WRX',
+    'Volkswagen Jetta','Volkswagen Passat','Volkswagen Tiguan','Volkswagen Atlas','Volkswagen Golf',
+    'Lexus ES','Lexus RX','Lexus NX','Lexus IS','Lexus GX',
+    'GMC Sierra','GMC Terrain','GMC Yukon','GMC Acadia','GMC Canyon',
+    'Ram 1500','Ram 2500','Ram 3500',
+    'Cadillac Escalade','Cadillac CT5','Cadillac XT5','Cadillac XT4',
+    'Lincoln Navigator','Lincoln Corsair','Lincoln Aviator',
+    'Mazda3','Mazda6','Mazda CX-5','Mazda CX-9','Mazda CX-30',
+    'Acura MDX','Acura RDX','Acura TLX','Acura ILX',
+    'Infiniti Q50','Infiniti QX60','Infiniti QX80',
+    'Volvo XC90','Volvo XC60','Volvo S60','Volvo V60',
+    'Land Rover Defender','Land Rover Discovery','Range Rover Sport','Range Rover Evoque',
+    'Porsche 911','Porsche Cayenne','Porsche Macan','Porsche Panamera',
+    'Chrysler 300','Chrysler Pacifica',
+    'Buick Enclave','Buick Encore','Buick Envision',
+  ];
 
-  function updateHeroTextOpacity() {
-    const vh = window.innerHeight;
-    // Fade starts at 25vh scrolled, fully gone by 55vh
-    // (car reaches center at ~60vh of scroll)
-    const fadeStart = vh * 0.25;
-    const fadeEnd   = vh * 0.55;
-    const opacity   = Math.max(0, 1 - (window.scrollY - fadeStart) / (fadeEnd - fadeStart));
-    heroText.style.opacity = opacity;
-    heroText.style.transform = `translateY(${(1 - opacity) * -24}px)`;
+  const modelInput = document.getElementById('model-input');
+  const suggList   = document.getElementById('model-suggestions');
+  let activeIdx    = -1;
+
+  modelInput.addEventListener('input', () => {
+    const q = modelInput.value.trim().toLowerCase();
+    suggList.innerHTML = '';
+    activeIdx = -1;
+    if (!q) { suggList.classList.remove('open'); return; }
+    const matches = CAR_MODELS.filter(m => m.toLowerCase().includes(q)).slice(0, 8);
+    if (!matches.length) { suggList.classList.remove('open'); return; }
+    matches.forEach(m => {
+      const li = document.createElement('li');
+      li.textContent = m;
+      li.addEventListener('mousedown', () => { modelInput.value = m; suggList.classList.remove('open'); });
+      suggList.appendChild(li);
+    });
+    suggList.classList.add('open');
+  });
+
+  modelInput.addEventListener('keydown', e => {
+    const items = suggList.querySelectorAll('li');
+    if (e.key === 'ArrowDown') { activeIdx = Math.min(activeIdx + 1, items.length - 1); }
+    else if (e.key === 'ArrowUp') { activeIdx = Math.max(activeIdx - 1, 0); }
+    else if (e.key === 'Enter' && activeIdx >= 0) { modelInput.value = items[activeIdx].textContent; suggList.classList.remove('open'); return; }
+    else if (e.key === 'Escape') { suggList.classList.remove('open'); return; }
+    items.forEach((li, i) => li.classList.toggle('active', i === activeIdx));
+  });
+
+  modelInput.addEventListener('blur', () => setTimeout(() => suggList.classList.remove('open'), 150));
+
+  let savedModel = '';
+
+  function saveModel() {
+    const val = modelInput.value.trim();
+    if (!val) return;
+    suggList.classList.remove('open');
+    savedModel = val;
+    const btn = document.getElementById('model-save-btn');
+    btn.textContent = 'Saved!';
+    btn.disabled = true;
+    // Show model label above car
+    const label = document.getElementById('car-model-label');
+    label.textContent = val;
+    label.classList.add('visible');
+    // Collapse panel after brief delay
+    setTimeout(() => {
+      btn.style.display = 'none';
+      btn.textContent = 'Save';
+      btn.disabled = false;
+      document.getElementById('model-panel').classList.add('collapsed');
+    }, 1250);
   }
 
-  window.addEventListener('scroll', updateHeroTextOpacity, { passive: true });
-  updateHeroTextOpacity();
+  function toggleModelPanel() {
+    document.getElementById('model-panel').classList.toggle('collapsed');
+  }
+
+  modelInput.addEventListener('input', () => {
+    if (modelInput.value.trim() !== savedModel) {
+      const btn = document.getElementById('model-save-btn');
+      btn.style.display = '';
+    }
+  });
+
+  /* ── Hero text fade on scroll ─────────────────────────── */
+  const heroText  = document.querySelector('.hero-text');
+  const heroPre   = document.querySelector('.hero-pre');
+  const heroCta   = document.querySelector('.hero-cta');
+
+  window.addEventListener('scroll', () => {
+    if (!heroPre) return;
+    const preH    = heroPre.offsetHeight;
+    const scrollY = window.scrollY;
+
+    // Text fades out as hero-pre scrolls away
+    const fadeStart  = preH * 0.2;
+    const textOpacity = Math.max(0, 1 - Math.max(0, scrollY - fadeStart) / (preH * 0.6));
+    heroText.style.opacity   = textOpacity;
+    heroText.style.transform = `translateY(${(1 - textOpacity) * -20}px)`;
+
+    // CTA button: fades in after sticky starts, fades out before sticky ends
+    // Sticky zone: preH → preH + 1200px
+    const stickyStart = preH;
+    const resistance  = 1200;
+    const fadeInEnd   = stickyStart + 220;
+    const fadeOutStart= stickyStart + resistance - 220;
+    const fadeOutEnd  = stickyStart + resistance;
+
+    let ctaOpacity = 0;
+    if (scrollY >= stickyStart && scrollY <= fadeInEnd) {
+      ctaOpacity = (scrollY - stickyStart) / 220;
+    } else if (scrollY > fadeInEnd && scrollY < fadeOutStart) {
+      ctaOpacity = 1;
+    } else if (scrollY >= fadeOutStart && scrollY <= fadeOutEnd) {
+      ctaOpacity = 1 - (scrollY - fadeOutStart) / 220;
+    }
+    ctaOpacity = Math.max(0, Math.min(1, ctaOpacity));
+    heroCta.style.opacity       = ctaOpacity;
+    heroCta.style.pointerEvents = ctaOpacity > 0.1 ? 'auto' : 'none';
+  }, { passive: true });
+</script>
+
+<!-- ─── SCAN MODAL ───────────────────────────────────── -->
+<div id="scan-modal" class="scan-modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="scan-modal">
+    <div class="scan-modal-header">
+      <span class="scan-modal-title">Upload Damage Photo</span>
+      <button class="scan-modal-close" onclick="closeScanModal()">✕</button>
+    </div>
+    <div id="drop-zone" class="drop-zone"
+         ondragover="handleDragOver(event)"
+         ondragleave="handleDragLeave(event)"
+         ondrop="handleDrop(event)"
+         onclick="document.getElementById('file-input').click()">
+      <div id="drop-zone-content" class="drop-zone-content">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect x="4" y="10" width="40" height="30" rx="4" stroke="currentColor" stroke-width="2"/>
+          <circle cx="18" cy="21" r="4" stroke="currentColor" stroke-width="2"/>
+          <path d="M4 32l10-9 8 8 6-5 16 9" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <p class="drop-zone-text">Drag & drop a photo here</p>
+        <p class="drop-zone-sub">or click to browse</p>
+        <span class="drop-zone-hint">JPG, PNG, WEBP up to 20MB</span>
+      </div>
+      <img id="drop-preview" class="drop-preview" src="" alt="Preview" style="display:none"/>
+    </div>
+    <input id="file-input" type="file" accept="image/*" style="display:none" onchange="handleFileSelect(event)"/>
+    <div id="scan-modal-actions" class="scan-modal-actions" style="display:none">
+      <button class="scan-clear-btn" onclick="clearUpload()">Remove</button>
+      <button class="scan-submit-btn">Analyze Damage →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openScanModal()  { document.getElementById('scan-modal').classList.add('open'); }
+  function closeScanModal() { document.getElementById('scan-modal').classList.remove('open'); clearUpload(); }
+  function handleOverlayClick(e) { if (e.target === e.currentTarget) closeScanModal(); }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('drop-zone').classList.add('drag-over');
+  }
+  function handleDragLeave() { document.getElementById('drop-zone').classList.remove('drag-over'); }
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('drop-zone').classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadPreview(file);
+  }
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) loadPreview(file);
+  }
+  function loadPreview(file) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const preview = document.getElementById('drop-preview');
+      preview.src = ev.target.result;
+      preview.style.display = 'block';
+      document.getElementById('drop-zone-content').style.display = 'none';
+      document.getElementById('scan-modal-actions').style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+  }
+  function clearUpload() {
+    document.getElementById('drop-preview').style.display = 'none';
+    document.getElementById('drop-preview').src = '';
+    document.getElementById('drop-zone-content').style.display = 'flex';
+    document.getElementById('scan-modal-actions').style.display = 'none';
+    document.getElementById('file-input').value = '';
+  }
 </script>
 </body>
 </html>

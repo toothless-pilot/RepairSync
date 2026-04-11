@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — RepairSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Karla:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:       #0A0B0F;
+      --ink-mid:   #111318;
+      --ink-light: #1C1E27;
+      --lime:      #C6E83A;
+      --lime-dark: #a8c82f;
+      --white:     #F7F8F2;
+      --muted:     #7A7D8A;
+      --border:    rgba(247,248,242,0.07);
+      --ff-display: 'Syne', sans-serif;
+      --ff-body:   'Karla', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3.5rem;
+      background: var(--ink);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo em { font-style: normal; color: var(--lime); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.18s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a.active { color: var(--white); }
+
+    .nav-btn {
+      background: var(--lime) !important;
+      color: var(--ink) !important;
+      font-weight: 700 !important;
+      padding: 0.5rem 1.3rem;
+      border-radius: 100px;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.01em;
+      transition: background 0.18s, transform 0.18s !important;
+    }
+    .nav-btn:hover { background: var(--lime-dark) !important; transform: translateY(-1px); }
+
+    /* ─── PAGE HEADER ─────────────────────────────────── */
+    .page-header {
+      padding: 10rem 3.5rem 5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .page-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lime);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .page-title {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+      max-width: 16ch;
+    }
+
+    .page-subtitle {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.72;
+      color: var(--muted);
+      max-width: 50ch;
+    }
+
+    /* ─── ROADMAP ─────────────────────────────────────── */
+    .roadmap {
+      padding: 2rem 3.5rem 8rem;
+    }
+
+    .roadmap-h {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      max-width: 1280px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .roadmap-list {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .roadmap-row {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 2.5rem;
+      padding: 2.25rem 0;
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .roadmap-row:last-child { border-bottom: 1px solid var(--border); }
+
+    .roadmap-num {
+      font-family: var(--ff-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--lime);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      padding-top: 0.15rem;
+    }
+
+    .roadmap-body { display: flex; flex-direction: column; gap: 0.35rem; }
+
+    .roadmap-title {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .roadmap-desc {
+      font-size: 0.88rem;
+      line-height: 1.68;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+
+    /* ─── COMPARISON ─────────────────────────────────── */
+    .comparison {
+      padding: 6rem 3.5rem 8rem;
+      background: var(--ink-mid);
+    }
+    .comparison-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .comparison-header {
+      margin-bottom: 3.5rem;
+    }
+    .comparison-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-top: 0.75rem;
+    }
+    .comparison-table {
+      display: flex;
+      flex-direction: column;
+    }
+    .comparison-col-labels {
+      display: grid;
+      grid-template-columns: 1fr 120px 120px;
+      align-items: end;
+      gap: 0;
+      padding: 0 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-label-spacer {}
+    .col-label {
+      text-align: center;
+      font-family: var(--ff-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0.75rem 0.25rem;
+    }
+    .repairsync-label {
+      color: var(--lime);
+      background: rgba(198,232,58,0.08);
+      border-radius: 8px 8px 0 0;
+      padding: 0.75rem 0.25rem;
+    }
+    .col-label-logo { font-style: normal; }
+    .col-label-logo em { font-style: normal; color: var(--lime); }
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 120px 120px;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+    .comparison-feature {
+      font-size: 0.925rem;
+      color: var(--white);
+      padding-right: 2rem;
+      line-height: 1.4;
+    }
+    .comparison-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .comparison-cell svg {
+      width: 22px;
+      height: 22px;
+    }
+    .comparison-cell.check {
+      color: var(--lime);
+      background: rgba(198,232,58,0.06);
+    }
+    .comparison-cell.cross {
+      color: #EF4444;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--lime); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Repair<em>Sync</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Product</a></li>
+    <li><a href="how-it-works.html" class="active">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <span class="page-eyebrow">The Process</span>
+  <h1 class="page-title">From photo to estimate in 60 seconds.</h1>
+  <p class="page-subtitle">RepairSync's AI pipeline turns damage photos, audio, or text into a verified, unbiased repair cost range — trusted by drivers, shops, and insurers alike.</p>
+</div>
+
+<section class="roadmap">
+  <h2 class="roadmap-h">Roadmap</h2>
+  <div class="roadmap-list">
+    <div class="roadmap-row">
+      <div class="roadmap-num">01</div>
+      <div class="roadmap-body">
+        <div class="roadmap-title">Upload or Describe Damage</div>
+        <p class="roadmap-desc">Drivers upload damage photos, record audio, or type a description. All three paths feed into the same AI analysis pipeline — no special equipment needed.</p>
+      </div>
+    </div>
+    <div class="roadmap-row">
+      <div class="roadmap-num">02</div>
+      <div class="roadmap-body">
+        <div class="roadmap-title">AI Vision Analysis</div>
+        <p class="roadmap-desc">Claude Vision identifies damaged parts, severity levels, and repair types — returning structured data in milliseconds. Dents, scratches, cracks, and replacements all detected.</p>
+      </div>
+    </div>
+    <div class="roadmap-row">
+      <div class="roadmap-num">03</div>
+      <div class="roadmap-body">
+        <div class="roadmap-title">Parts &amp; Labor Lookup</div>
+        <p class="roadmap-desc">Our system queries OEM parts databases and regional labor rate tables, cross-referencing historical invoice data to compute accurate cost ranges by ZIP code.</p>
+      </div>
+    </div>
+    <div class="roadmap-row">
+      <div class="roadmap-num">04</div>
+      <div class="roadmap-body">
+        <div class="roadmap-title">Verified Cost Range</div>
+        <p class="roadmap-desc">A min-max cost range is calculated per damaged component, with a plain-English summary — "Front bumper, left fender, paint blend needed → $1,580–$1,760."</p>
+      </div>
+    </div>
+    <div class="roadmap-row">
+      <div class="roadmap-num">05</div>
+      <div class="roadmap-body">
+        <div class="roadmap-title">PDF Report &amp; Settlement</div>
+        <p class="roadmap-desc">Download a branded PDF report with full itemized breakdown — use it to negotiate, settle, or dispute the claim with confidence and verifiable data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMPARISON ────────────────────────────────────── -->
+<section class="comparison">
+  <div class="comparison-inner">
+    <div class="comparison-header">
+      <span class="page-eyebrow">Why RepairSync</span>
+      <h2 class="comparison-title">A better way to settle claims.</h2>
+    </div>
+
+    <div class="comparison-table">
+      <div class="comparison-col-labels">
+        <div class="col-label-spacer"></div>
+        <div class="col-label repairsync-label">
+          <span class="col-label-logo">Repair<em>Sync</em></span>
+        </div>
+        <div class="col-label traditional-label">Traditional</div>
+      </div>
+
+      <!-- Both checkmark rows first -->
+      <div class="comparison-row">
+        <div class="comparison-feature">Provides a written estimate</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- RepairSync-only rows -->
+      <div class="comparison-row">
+        <div class="comparison-feature">Instant estimate (under 60s)</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell cross">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="comparison-row">
+        <div class="comparison-feature">Unbiased, neutral pricing</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell cross">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="comparison-row">
+        <div class="comparison-feature">Works from a photo — no adjuster visit</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell cross">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="comparison-row">
+        <div class="comparison-feature">OEM parts pricing cross-reference</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell cross">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="comparison-row">
+        <div class="comparison-feature">Trusted by all 3 parties (driver, shop, insurer)</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell cross">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="comparison-row">
+        <div class="comparison-feature">Plain-English explanation of costs</div>
+        <div class="comparison-cell check">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M4 10l4.5 4.5L16 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="comparison-cell cross">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 RepairSync. All rights reserved. &nbsp;·&nbsp; <a href="index.html">Back to Home</a>
+</footer>
+
+</body>
+</html>
