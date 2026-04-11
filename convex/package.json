@@ -1,0 +1,8 @@
+{
+  "name": "convex-config",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "convex": "^1.13.0"
+  }
+}

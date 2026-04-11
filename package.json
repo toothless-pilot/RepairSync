@@ -1,0 +1,15 @@
+{
+  "name": "repairsync",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/backend"
+  ],
+  "scripts": {
+    "backend": "yarn workspace backend dev"
+  },
+  "packageManager": "yarn@1.22.22",
+  "dependencies": {
+    "convex": "^1.35.1"
+  }
+}

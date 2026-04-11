@@ -1,0 +1,16 @@
+.env.local
+.env
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.expo/
+dist/
+build/
+.DS_Store
+package-lock.json
+.agents/
+.claude/
+convex/_generated/
+apps/mobile/convex/_generated/
+skills-lock.json

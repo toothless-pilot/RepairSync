@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "RepairSync",
+    "slug": "repairsync",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "repairsync",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0a0a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.repairsync.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "RepairSync needs camera access to photograph vehicle damage."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0a0a"
+      },
+      "package": "com.repairsync.app",
+      "permissions": ["CAMERA"]
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "RepairSync needs camera access to photograph vehicle damage."
+        }
+      ],
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
