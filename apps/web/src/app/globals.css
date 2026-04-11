@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #CCFF00;
+  --color-sidebar: #09090b;
+  --color-brand: #ffffff;
+  
+  --font-serif: "DM Serif Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-50 text-zinc-950 antialiased font-sans;
+  }
+}
+
+@layer components {
+  .btn-accent {
+    @apply bg-accent text-black font-bold px-6 py-3 rounded-full transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .glass-card {
+    @apply bg-white border border-zinc-200 shadow-sm rounded-2xl p-6;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-zinc-400 hover:text-white hover:bg-white/5;
+  }
+
+  .sidebar-item-active {
+    @apply text-accent bg-accent/10 font-bold;
+  }
+}
