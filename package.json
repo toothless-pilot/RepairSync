@@ -1,15 +1,22 @@
 {
-  "name": "repairsync",
-  "version": "1.0.0",
+  "name": "repair-sync",
   "private": true,
   "workspaces": [
+    "packages/*",
+    "apps/web",
     "apps/backend"
   ],
   "scripts": {
+    "dev": "turbo run dev",
+    "typecheck": "turbo run typecheck",
     "backend": "yarn workspace backend dev"
   },
-  "packageManager": "yarn@1.22.22",
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
   "dependencies": {
     "convex": "^1.35.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }
