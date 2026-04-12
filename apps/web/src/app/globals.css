@@ -1,35 +1,79 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #CCFF00;
-  --color-sidebar: #09090b;
-  --color-brand: #ffffff;
-  
-  --font-serif: "DM Serif Display", serif;
-  --font-mono: "JetBrains Mono", monospace;
-  --font-sans: "Inter", sans-serif;
+  --color-ink:        #0A0B0F;
+  --color-ink-mid:    #111318;
+  --color-ink-light:  #1C1E27;
+  --color-lime:       #C6E83A;
+  --color-lime-dark:  #a8c82f;
+  --color-cream:      #F7F8F2;
+  --color-muted:      #7A7D8A;
+
+  --font-display: var(--font-syne), 'Syne', sans-serif;
+  --font-body:    var(--font-karla), 'Karla', sans-serif;
 }
 
 @layer base {
+  :root {
+    --border: rgba(247, 248, 242, 0.07);
+  }
+
   body {
-    @apply bg-zinc-50 text-zinc-950 antialiased font-sans;
+    background: #0A0B0F;
+    color: #F7F8F2;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 @layer components {
   .btn-accent {
-    @apply bg-accent text-black font-bold px-6 py-3 rounded-full transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+    @apply bg-lime text-ink font-bold px-6 py-3 rounded-full transition-all hover:bg-lime-dark hover:-translate-y-px active:scale-95 cursor-pointer border-none;
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-ghost {
+    @apply text-cream font-bold px-6 py-3 rounded-full transition-all hover:-translate-y-px active:scale-95 cursor-pointer;
+    background: transparent;
+    border: 1.5px solid rgba(247, 248, 242, 0.2);
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+  }
+  .btn-ghost:hover {
+    border-color: #C6E83A;
+    color: #C6E83A;
   }
 
   .glass-card {
-    @apply bg-white border border-zinc-200 shadow-sm rounded-2xl p-6;
+    background: #111318;
+    border: 1px solid var(--border);
+    @apply rounded-2xl p-6;
   }
 
-  .sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-zinc-400 hover:text-white hover:bg-white/5;
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #C6E83A;
+    font-weight: 600;
   }
 
-  .sidebar-item-active {
-    @apply text-accent bg-accent/10 font-bold;
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(198, 232, 58, 0.1);
+    border: 1px solid rgba(198, 232, 58, 0.2);
+    border-radius: 100px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.75rem;
+    color: #C6E83A;
+    font-weight: 600;
+    width: fit-content;
   }
 }

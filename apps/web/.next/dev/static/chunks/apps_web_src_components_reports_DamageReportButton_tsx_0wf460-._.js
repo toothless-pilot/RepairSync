@@ -1,0 +1,23 @@
+(globalThis["TURBOPACK"] || (globalThis["TURBOPACK"] = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[project]/apps/web/src/components/reports/DamageReportButton.tsx [app-client] (ecmascript, next/dynamic entry, async loader)", ((__turbopack_context__) => {
+
+__turbopack_context__.v((parentImport) => {
+    return Promise.all([
+  "static/chunks/node_modules_brotli_0tabrdm._.js",
+  "static/chunks/node_modules_fontkit_dist_browser-module_mjs_09xahr~._.js",
+  "static/chunks/node_modules_pako_lib_0fh9ime._.js",
+  "static/chunks/node_modules_@react-pdf_png-js_lib_png-js_browser_0i~myz_.js",
+  "static/chunks/node_modules_@react-pdf_pdfkit_lib_pdfkit_browser_0w5ammq.js",
+  "static/chunks/node_modules_hyphen_0t~m5jz._.js",
+  "static/chunks/node_modules_yoga-layout_dist_0v8.1ot._.js",
+  "static/chunks/node_modules_@react-pdf_layout_lib_index_00m-a9~.js",
+  "static/chunks/node_modules_@react-pdf_reconciler_lib_0g_bj21._.js",
+  "static/chunks/node_modules_12ewu-5._.js",
+  "static/chunks/apps_web_src_components_reports_13j94ct._.js",
+  "static/chunks/apps_web_src_components_reports_DamageReportButton_tsx_12pxh0l._.js"
+].map((chunk) => __turbopack_context__.l(chunk))).then(() => {
+        return parentImport("[project]/apps/web/src/components/reports/DamageReportButton.tsx [app-client] (ecmascript, next/dynamic entry)");
+    });
+});
+}),
+]);

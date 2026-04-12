@@ -1,0 +1,15 @@
+{
+  "app": {
+    "[project]/apps/web/src/app/_not-found/page": [
+      "static/media/0c795a286deabae8-s.p.14tvuu96~wkr0.woff2",
+      "static/media/680aa1e827d679d2-s.p.17okjora9rfx0.woff2"
+    ],
+    "[project]/apps/web/src/app/assessment/page": [
+      "static/media/0c795a286deabae8-s.p.14tvuu96~wkr0.woff2",
+      "static/media/680aa1e827d679d2-s.p.17okjora9rfx0.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

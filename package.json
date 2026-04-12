@@ -1,0 +1,17 @@
+{
+  "name": "repair-sync",
+  "private": true,
+  "packageManager": "npm@11.9.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "typecheck": "turbo run typecheck",
+    "dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}

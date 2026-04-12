@@ -1,25 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, DM_Serif_Display, JetBrains_Mono } from "next/font/google";
+import { Syne, Karla } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-syne",
 });
 
-const dmSerif = DM_Serif_Display({
-  weight: "400",
+const karla = Karla({
   subsets: ["latin"],
-  variable: "--font-serif",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-karla",
 });
 
 export const metadata: Metadata = {
-  title: "RepairSync | High-Precision Damage Assessment",
+  title: "RepairSync | AI Damage Assessment",
   description: "AI-powered fair market repair estimates and parts pricing.",
 };
 
@@ -29,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${dmSerif.variable} ${mono.variable}`}>
+    <html lang="en" className={`${syne.variable} ${karla.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   );

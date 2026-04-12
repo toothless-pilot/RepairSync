@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — RepairSync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Karla:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:       #0A0B0F;
+      --ink-mid:   #111318;
+      --ink-light: #1C1E27;
+      --lime:      #C6E83A;
+      --lime-dark: #a8c82f;
+      --white:     #F7F8F2;
+      --muted:     #7A7D8A;
+      --border:    rgba(247,248,242,0.07);
+      --ff-display: 'Syne', sans-serif;
+      --ff-body:   'Karla', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3.5rem;
+      background: var(--ink);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo em { font-style: normal; color: var(--lime); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.18s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a.active { color: var(--white); }
+
+    /* ─── PAGE HEADER ─────────────────────────────────── */
+    .page-header {
+      padding: 10rem 3.5rem 5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .page-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lime);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .page-title {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+    }
+    .page-subtitle {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      line-height: 1.72;
+      color: var(--muted);
+      max-width: 50ch;
+    }
+
+    /* ─── TEAM ────────────────────────────────────────── */
+    .team {
+      background: var(--ink-mid);
+      padding: 6rem 3.5rem;
+    }
+    .team-h {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      max-width: 1280px;
+      margin: 0 auto 3rem;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .team-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .team-photo-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--ink-light);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .team-initials {
+      font-family: var(--ff-display);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--border);
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+    .team-lime-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--lime);
+    }
+    .team-name {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .team-role {
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--lime); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Repair<em>Sync</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Product</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <span class="page-eyebrow">The People</span>
+  <h1 class="page-title">Contact Us.</h1>
+  <p class="page-subtitle">We're builders, researchers, and operators who believe the auto repair industry deserves a neutral source of truth.</p>
+</div>
+
+
+<footer>
+  &copy; 2025 RepairSync. All rights reserved. &nbsp;·&nbsp; <a href="index.html">Back to Home</a>
+</footer>
+
+</body>
+</html>

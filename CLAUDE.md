@@ -101,7 +101,7 @@ Damage is classified into a structured object:
 - `cn()` from `@/lib/utils` for conditional classNames
 - Car part names use snake_case from `@/lib/constants`
 - API routes return `{ error: string }` on failure
-- Read `frontend.md` before any frontend work
+- Read `docs/frontend.md` before any frontend work
 
 ## Tone & Vocabulary
 

@@ -1,79 +1,74 @@
 "use client";
 
-import { Plus, Info, HelpCircle, LayoutDashboard, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NAV_ITEMS = [
-  { label: "New Estimate", icon: Plus,         href: "/" },
-  { label: "Dashboard",    icon: LayoutDashboard, href: "/dashboard" },
-  { label: "How It Works", icon: Info,         href: "/how-it-works" },
-  { label: "About",        icon: HelpCircle,   href: "/about" },
+const NAV_LINKS = [
+  { label: "Product",      href: "/assessment" },
+  { label: "How It Works", href: "/how-it-works.html" },
+  { label: "Contact",      href: "/contact.html" },
 ];
 
-export function Sidebar() {
+export function Header() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-16 bottom-0 w-64 bg-sidebar border-r border-white/5 flex flex-col p-4 z-40 overflow-y-auto">
-      <nav className="flex-1 space-y-1">
-        {NAV_ITEMS.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
+    <header
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between"
+      style={{
+        padding: "1.2rem 3.5rem",
+        background: "#0A0B0F",
+        borderBottom: "1px solid rgba(247,248,242,0.07)",
+      }}
+    >
+      {/* Logo */}
+      <Link
+        href="/"
+        prefetch={false}
+        className="no-underline"
+        style={{
+          fontFamily: "var(--font-syne), 'Syne', sans-serif",
+          fontWeight: 800,
+          fontSize: "1.1rem",
+          letterSpacing: "-0.03em",
+          color: "#F7F8F2",
+        }}
+      >
+        Repair<em style={{ fontStyle: "normal", color: "#C6E83A" }}>Sync</em>
+      </Link>
+
+      {/* Links */}
+      <nav style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+        {NAV_LINKS.map((link) => {
+          const isActive = pathname === link.href;
           return (
             <Link
-              key={item.label}
-              href={item.href}
-              className={`sidebar-item ${isActive ? "sidebar-item-active" : ""}`}
+              key={link.label}
+              href={link.href}
+              prefetch={false}
+              className="no-underline transition-colors"
+              style={{
+                color: isActive ? "#F7F8F2" : "#7A7D8A",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                letterSpacing: "0.01em",
+              }}
             >
-              <Icon className="h-4 w-4" />
-              <span className="text-sm font-medium tracking-wide">{item.label}</span>
+              {link.label}
             </Link>
           );
         })}
       </nav>
-
-      <div className="pt-4 border-t border-white/5 mt-auto">
-        <button className="sidebar-item w-full">
-          <Settings className="h-4 w-4" />
-          <span className="text-sm font-medium">Settings</span>
-        </button>
-      </div>
-    </aside>
-  );
-}
-
-export function Header() {
-  return (
-    <header className="fixed top-0 left-0 right-0 h-16 bg-sidebar border-b border-white/5 flex items-center justify-between px-6 z-50">
-      <div className="flex items-center gap-8">
-        <Link href="/" className="text-2xl font-serif text-white tracking-tight">
-          RepairSync
-        </Link>
-        <div className="h-4 w-px bg-white/10 hidden sm:block" />
-        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent hidden sm:block">
-          Market Intelligence
-        </span>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1 border border-accent/20">
-          <div className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-accent">Demo Mode</span>
-        </div>
-        <div className="h-8 w-8 rounded-full bg-zinc-800 border border-white/10" />
-      </div>
     </header>
   );
 }
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-zinc-50 flex flex-col pt-16 pl-64 transition-all">
+    <div className="min-h-screen" style={{ background: "#0A0B0F", color: "#F7F8F2" }}>
       <Header />
-      <Sidebar />
-      <main className="flex-1 p-8 overflow-x-hidden">
-        <div className="max-w-6xl mx-auto">
+      <main style={{ paddingTop: "5rem", padding: "5rem 2rem 5rem" }}>
+        <div style={{ maxWidth: "72rem", margin: "0 auto" }}>
           {children}
         </div>
       </main>
