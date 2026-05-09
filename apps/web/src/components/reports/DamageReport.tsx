@@ -55,14 +55,14 @@ const s = StyleSheet.create({
 
   // Photo
   photo:        { width: "100%", borderRadius: 6, marginBottom: 6, objectFit: "cover", maxHeight: 200 },
-  photoCaption: { fontSize: 7, color: MUTED, color: MUTED },
+  photoCaption: { fontSize: 7, color: MUTED },
 
   // Damage rows
   damageCard:   { backgroundColor: INK_MID, borderRadius: 8, padding: "0 0", marginBottom: 2, overflow: "hidden" },
   damageRow:    { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: "10 14" },
   damageSep:    { height: 1, backgroundColor: BORDER },
   damageLabel:  { fontFamily: "Helvetica", fontWeight: 600, fontSize: 10, color: CREAM },
-  damageNote:   { fontSize: 8, color: MUTED, color: MUTED, marginTop: 2 },
+  damageNote:   { fontSize: 8, color: MUTED, marginTop: 2 },
   badge:        { fontSize: 7, fontFamily: "Helvetica", fontWeight: 600, padding: "3 9", borderRadius: 20, textTransform: "uppercase", letterSpacing: 0.5 },
   badgeMinor:   { backgroundColor: "rgba(198,232,58,0.12)", color: LIME },
   badgeMod:     { backgroundColor: "rgba(198,232,58,0.22)", color: LIME },
