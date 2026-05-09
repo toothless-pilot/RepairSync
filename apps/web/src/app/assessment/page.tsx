@@ -37,7 +37,7 @@ export default function AssessmentPage() {
     const savedDamage = localStorage.getItem("rs_damage_notes");
     if (savedDamage) {
       try {
-        const parsed = JSON.parse(savedDamage);
+        const parsed = JSON.parse(savedDamage) as Record<string, { severity: "minor" | "moderate" | "severe" | null; notes: string }>;
         setDamageNotes(parsed);
         setLineItems(buildLineItems(parsed));
         setSummary(buildSummary(parsed));
