@@ -29,7 +29,7 @@ export function PDFDownloadButton({ assessment }: PDFDownloadButtonProps) {
 
   return (
     <PDFDownloadLink
-      document={<RefereeReport assessment={assessment} />}
+      document={<RefereeReport assessment={assessment as any} />}
       fileName={`Referee-Report-RS-${assessment._id.slice(-6).toUpperCase()}.pdf`}
       style={{ textDecoration: "none", width: "100%" }}
     >

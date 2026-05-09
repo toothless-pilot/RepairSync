@@ -4,14 +4,19 @@ import { LineItem } from "@repair-sync/types";
 import { AlertCircle, AlertTriangle, CheckCircle2, Flag } from "lucide-react";
 import { useDisputeStore } from "@/store/useDisputeStore";
 
+export type DisputeLineItem = LineItem & {
+  shopPrice: number;
+  status: "overcharge" | "missing_safety" | "agreed";
+};
+
 interface DisputeShieldProps {
-  items: LineItem[];
+  items: DisputeLineItem[];
 }
 
 export function DisputeShield({ items }: DisputeShieldProps) {
   const { flaggedItems, toggleFlag } = useDisputeStore();
 
-  const getStatusConfig = (status: LineItem["status"]) => {
+  const getStatusConfig = (status: DisputeLineItem["status"]) => {
     switch (status) {
       case "overcharge":
         return {

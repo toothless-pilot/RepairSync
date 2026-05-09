@@ -1,7 +1,12 @@
 "use client";
 
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import { Assessment, LineItem } from "@repair-sync/types";
+import { Assessment, LineItem as BaseLineItem } from "@repair-sync/types";
+
+export type DisputeLineItem = BaseLineItem & {
+  shopPrice: number;
+  status: "overcharge" | "missing_safety" | "agreed";
+};
 
 const styles = StyleSheet.create({
   page: {
@@ -110,12 +115,12 @@ const styles = StyleSheet.create({
 });
 
 interface RefereeReportProps {
-  assessment: Assessment;
+  assessment: Omit<Assessment, 'lineItems'> & { lineItems: DisputeLineItem[] };
 }
 
 export function RefereeReport({ assessment }: RefereeReportProps) {
   const totalDiscrepancy = (assessment.lineItems || []).reduce(
-    (acc: number, curr: LineItem) => acc + (curr.shopPrice - curr.aiPrice),
+    (acc: number, curr: DisputeLineItem) => acc + (curr.shopPrice - curr.aiPrice),
     0
   );
 
@@ -162,7 +167,7 @@ export function RefereeReport({ assessment }: RefereeReportProps) {
               <Text style={[styles.colStatus, { fontWeight: "bold" }]}>Status</Text>
             </View>
 
-            {(assessment.lineItems || []).map((item: LineItem) => (
+            {(assessment.lineItems || []).map((item: DisputeLineItem) => (
               <View key={item.id} style={styles.tableRow}>
                 <Text style={styles.colDesc}>{item.description}</Text>
                 <Text style={styles.colPrice}>${item.shopPrice.toFixed(2)}</Text>
